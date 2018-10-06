@@ -7,6 +7,13 @@ app.use(bodyParser.json()); //midleware
 //var router = express.Router();
 //app.use('/testRouter',  router.get('/testRouter', controller.test));
 
+var mongoose = require('mongoose'), dev_db_url = 'mongodb://urls-admin:ur1s-adm!n@ds125073.mlab.com:25073/urls',
+mongoDB = process.env.MONGODB_URI || dev_db_url;
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 app.get('/api/controllerGetUrl', controller.getTest); // sin el router y con el controlador
 app.get('/api/test', controller.test);
 app.get('/api/appTest', (req, res)=>{
