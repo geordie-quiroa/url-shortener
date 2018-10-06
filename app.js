@@ -10,7 +10,7 @@ app.get('/api/controllerGetUrl', controller.getTest);
 
 app.get('/api/test', controller.test);
 app.get('/api/appTest', (req, res)=>{
-    res.send(httpVerbs.getTinyUrl("frag.me/b1&cQ"));
+    res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
 });
 app.get("/", (req, res)=>{
     res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
