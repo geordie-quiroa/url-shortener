@@ -54,6 +54,27 @@ var getLongUrl = (req, res) => {
     });
 };
 
+var deleteUrl = (req, res) => {
+    Url.findOneAndDelete(req.params.shortenKey)
+    .then(URL => {
+        if(!URL) {
+            return res.status(404).send({
+                message: "Url not found with shortenKey " + req.params.shortenKey
+            });
+        }
+        res.send({message: "Url deleted from DB successfully!"});
+    }).catch(err => {
+        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.status(404).send({
+                message: "Url not found with shortenKey " + req.params.shortenKey
+            });                
+        }
+        return res.status(500).send({
+            message: "Could not delete url with shortenKey " + req.params.shortenKey
+        });
+    });
+};
+
 
 var test = (req,res)=>{
     res.send("El url.controller funciona!");
@@ -61,6 +82,6 @@ var test = (req,res)=>{
 var getTest = (req, res)=>{
     res.send(httpVerbs.getTinyUrl("frag.me/bAf1&cQ"))
 };
-module.exports.generateTinyUrl = generateTinyUrl, module.exports.getUrls=getUrls, module.exports.getLongUrl = getLongUrl,
+module.exports.generateTinyUrl = generateTinyUrl, module.exports.getUrls=getUrls, module.exports.getLongUrl = getLongUrl, module.exports.deleteUrl = deleteUrl,
 module.exports.test = test, module.exports.getTest = getTest;
 
