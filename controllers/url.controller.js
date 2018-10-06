@@ -13,20 +13,31 @@ var generateTinyUrl = (req, res)=>{
             visits:0
         });
         url2save.save().then(data => {
-            res.status(201).send(data);
+            res.status(201).send({dataStored2mongoDb: data, success:'true', message:'created Tiny Url'});
         }).catch(err => {
             res.status(500).send({
                 message: err.message || "Ocurrio un error al guardar el url en la db."
             });
         });
-        //res.status(201).send({succes:'true', message:'created tiny Url'});
+        //res.status(201).send({success:'true', message:'created tiny Url'});
     }
 };
+var getUrls = (req, res) => {
+    Url.find()
+    .then(urls => {
+        res.status(200).send(urls);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Hubo un error al recuperar los datos."
+        });
+    });
+};
+
 var test = (req,res)=>{
     res.send("El url.controller funciona!");
 };
 var getTest = (req, res)=>{
     res.send(httpVerbs.getTinyUrl("frag.me/bAf1&cQ"))
 };
-module.exports.generateTinyUrl = generateTinyUrl, module.exports.test = test, module.exports.getTest = getTest;
+module.exports.generateTinyUrl = generateTinyUrl, module.exports.getUrls=getUrls, module.exports.test = test, module.exports.getTest = getTest;
 
