@@ -13,27 +13,32 @@ mongoose.Promise = global.Promise;
 mongoose.connect(mongoDB, {
     useNewUrlParser: true
 }).then(() => {
-    console.log("Successfully connected to the database");    
+    console.log("Conectado a la base de datos...");    
 }).catch(err => {
-    console.log('Could not connect to the database. Exiting now...', err);
+    console.log('Error en conexión a base de datos...', err);
     process.exit();
 });
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// -------------------------- Rutas y Verbos HTTP -----------------------------------------------------------------
+app.post('/api/url/create', controller.generateTinyUrl);
 
-app.get('/api/controllerGetUrl', controller.getTest); // sin el router y con el controlador
+app.get('/api/urls', controller.getTest); // sin el router y con el controlador
+
 app.get('/api/test', controller.test);
+
 app.get('/api/appTest', (req, res)=>{
     res.send(httpVerbs.getTinyUrl("frag.me/GNktcm")); // sin router y sin controlador
 });
+
 app.get("/", (req, res)=>{
     res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
     //res.json({"Message":"Url shortener under construction..."})
 });
+
 app.get("/api/getUrls"), (req, res)=>{
     res.status(200).send(controller.getTest(tinyUrl="frag.me/GNkcm"));
 };
+
 app.post("/apr/shorten", (req, res)=>{
     res.json({url: "https://spring.io/nodeJSdeveloping/REST"});
     res.sendStatus(201).send("Todo esta bien.");
