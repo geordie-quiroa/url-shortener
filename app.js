@@ -3,14 +3,14 @@ bodyParser = require('body-parser'), app = express(), http = require('http'), co
 app.use(bodyParser.urlencoded({extended:true})); // esto es para parsear el body & middleware
 app.use(bodyParser.json()); //midleware
 //require('./routes/url.router')(app);
-//app.use('/api', urls); 
 //var controller = require('../controllers/url.controller.js');
+//var router = express.Router();
+//app.use('/testRouter',  router.get('/testRouter', controller.test));
 
-app.get('/api/controllerGetUrl', controller.getTest);
-
+app.get('/api/controllerGetUrl', controller.getTest); // sin el router y con el controlador
 app.get('/api/test', controller.test);
 app.get('/api/appTest', (req, res)=>{
-    res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
+    res.send(httpVerbs.getTinyUrl("frag.me/GNktcm")); // sin router y sin controlador
 });
 app.get("/", (req, res)=>{
     res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));

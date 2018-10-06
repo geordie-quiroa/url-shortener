@@ -1,3 +1,4 @@
+//var express = require('express'), router = express.Router()
 module.exports = (app)=>{
     var controller = require('../controllers/url.controller.js');
 
