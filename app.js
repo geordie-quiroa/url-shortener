@@ -6,6 +6,13 @@ app.get("/", (req, res)=>{
     res.send(urlHandling.getTinyUrl("frag.me/GNktcm"));
     //res.json({"Message":"Url shortener under construction..."})
 });
+app.get("/api/getUrls"), (req, res)=>{
+    res.status(200).send({
+        success:'true',
+        description: 'Lectura de urls registrados',
+        urls: urlHandling.urls
+    });
+};
 app.post("/api/shorten", (req, res)=>{
     res.json({user: "Toby"});
     res.sendStatus(201).send("Todo esta bien.");
