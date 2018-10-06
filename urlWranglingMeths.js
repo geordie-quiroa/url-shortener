@@ -64,12 +64,14 @@ function leerJSON(json){
     }
   };
 module.exports.createTinyUrl = createTinyUrl;
-var prueba = createTinyUrl("https://www.github.com/");
-var prueba2 = createTinyUrl("https://www.geordiequiroa.co/");
-console.log(prueba2);
-leerJSON(tmpJson);
-longUrl = getTinyUrl(prueba2);
-console.log(longUrl);
-
+module.exports.getTinyUrl = getTinyUrl;
+if (require.main === module) {
+    var prueba = createTinyUrl("https://www.github.com/");
+    var prueba2 = createTinyUrl("https://www.geordiequiroa.co/");
+    console.log(prueba2);
+    leerJSON(tmpJson);
+    longUrl = getTinyUrl(prueba2);
+    console.log(longUrl);
+};
 // 3 rutas> post, get, delete 
 //Vue JS
