@@ -1,4 +1,4 @@
-var baseUrl="frag.me/", chars= "0123456789abcdefghiklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ&-", charsAvailable= chars.length;
+var chars= "0123456789abcdefghiklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ&-", charsAvailable= chars.length, baseUrl="frag.me/";
 var tmpJson = [
     {
     "shortenKey": "bAf1&cQ",
@@ -57,7 +57,7 @@ var createTinyUrl = (urlInput)=>{
     };
     var shortenUrl = (baseUrl+shortenDir).toString();
     insert2db(urlInput,shortenUrl, shortenDir);
-    return shortenUrl;
+    return shortenDir;
 };
 
 var deleteUrl=(tinyUrl2delete)=>{
