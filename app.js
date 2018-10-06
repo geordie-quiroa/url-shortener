@@ -7,10 +7,18 @@ app.use(bodyParser.json()); //midleware
 //var router = express.Router();
 //app.use('/testRouter',  router.get('/testRouter', controller.test));
 
-var mongoose = require('mongoose'), dev_db_url = 'mongodb://urls-admin:ur1s-adm!n@ds125073.mlab.com:25073/urls',
-mongoDB = process.env.MONGODB_URI || dev_db_url;
-mongoose.connect(mongoDB);
+var mongoose = require('mongoose'), dev_db = require('./configs/mongoDB.config'),
+mongoDB = process.env.MONGODB_URI || dev_db.url;
 mongoose.Promise = global.Promise;
+mongoose.connect(mongoDB, {
+    useNewUrlParser: true
+}).then(() => {
+    console.log("Successfully connected to the database");    
+}).catch(err => {
+    console.log('Could not connect to the database. Exiting now...', err);
+    process.exit();
+});
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
