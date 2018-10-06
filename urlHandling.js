@@ -1,9 +1,9 @@
 var baseUrl="frag.me/", chars= "0123456789abcdefghiklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ&-", charsAvailable= chars.length;
 var tmpJson = [
     {
-    "shortenKey": "bAf1&cQxp&1V",
+    "shortenKey": "bAf1&cQ",
     "longUrl":"https://www.github.com/watch?v=LoVoqVqzMyQ",
-    "tinyUrl":"frag.me/bAf1&cQxp&1V",
+    "tinyUrl":"frag.me/bAf1&cQ",
     "visits":0
     }, {
     "shortenKey":"GNktcm",
@@ -30,7 +30,7 @@ var getTinyUrl = (tinyUrl2search)=>{
             return tmpJson[i].longUrl;
         };
         i++
-    if (n==0){
+    if (n!=0){
         return "Value Not Found!";
         };
     };
@@ -51,6 +51,9 @@ var createTinyUrl = (urlInput)=>{
         var randPos = Math.floor(Math.random()*charsAvailable);
         shortenDir+= chars.substring(randPos, randPos+1);
         shortenDir=shortenDir
+    };
+    if (shortenDir.length >7){
+        shortenDir = shortenDir.substring(0,7);
     };
     var shortenUrl = (baseUrl+shortenDir).toString();
     insert2db(urlInput,shortenUrl, shortenDir);
