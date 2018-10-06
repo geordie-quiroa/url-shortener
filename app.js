@@ -24,6 +24,8 @@ app.post('/api/url/create', controller.generateTinyUrl);
 
 app.get('/api/urls', controller.getUrls);
 
+app.get('/api/url/:shortenKey', controller.getLongUrl);
+
 app.get('/api/urlsTest', controller.getTest); // sin el router y con el controlador
 
 app.get('/api/test', controller.test);
