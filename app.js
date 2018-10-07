@@ -13,7 +13,7 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
   next()
 });
-
+// variables base de datos -------------------------------------------------------------------------------------
 var mongoose = require('mongoose'), dev_db = require('./configs/mongoDB.config'),
 mongoDB = process.env.MONGODB_URI || dev_db.url;
 mongoose.Promise = global.Promise;
@@ -26,7 +26,7 @@ mongoose.connect(mongoDB, {
     process.exit();
 });
 
-// -------------------------- Rutas y Verbos HTTP -----------------------------------------------------------------
+// -------------------------- Rutas y Verbos HTTP para el API-----------------------------------------------------------------
 app.post('/api/createUrl', controller.generateTinyUrl);
 
 app.get('/api/urls', controller.getUrls);
@@ -42,7 +42,7 @@ app.get('/api/test', controller.test);
 app.get('/api/appTest', (req, res)=>{
     res.send(httpVerbs.getTinyUrl("frag.me/GNktcm")); // sin router y sin controlador
 });
-
+// -------------------------------------------- Termina endpoints del API ----------------------------------------------------------------
 app.get("/", (req, res, next)=>{
     res.sendfile('./public/index.html');
     //res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
