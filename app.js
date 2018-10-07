@@ -6,6 +6,13 @@ app.use(bodyParser.json()); //midleware
 //var controller = require('../controllers/url.controller.js');
 //var router = express.Router();
 //app.use('/testRouter',  router.get('/testRouter', controller.test));
+app.use(express.static('./public'));
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:' + port)
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+  next()
+});
 
 var mongoose = require('mongoose'), dev_db = require('./configs/mongoDB.config'),
 mongoDB = process.env.MONGODB_URI || dev_db.url;
@@ -36,8 +43,9 @@ app.get('/api/appTest', (req, res)=>{
     res.send(httpVerbs.getTinyUrl("frag.me/GNktcm")); // sin router y sin controlador
 });
 
-app.get("/", (req, res)=>{
-    res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
+app.get("/", (req, res, next)=>{
+    res.sendfile('./public/index.html');
+    //res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
     //res.json({"Message":"Url shortener under construction..."})
 });
 
