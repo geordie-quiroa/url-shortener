@@ -41,7 +41,17 @@ var getLongUrl = (req, res) => {
                 message: "Url not found with shortenKey>  " + req.params.shortenKey
             });            
         }
-        res.send(URL);
+        //aqui voy a actualizar el URL visits
+        if(URL){
+            URL.visits += 1
+            URL.save(function(err) {
+                if (err) return err;
+            });
+        } else{
+            console.log(err);
+        }
+        //updateVisits(URL);
+        res.status(307).send(URL.url);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({

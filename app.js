@@ -6,9 +6,10 @@ app.use(bodyParser.json()); //midleware
 //var controller = require('../controllers/url.controller.js');
 //var router = express.Router();
 //app.use('/testRouter',  router.get('/testRouter', controller.test));
-app.use(express.static('./public'));
+var port = 3000;
+//app.use(express.static('./frontend/public/index.html'));
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:' + port)
+  res.setHeader('Access-Control-Allow-Origin', 'http://frag.me:' + port)
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
   next()
@@ -44,9 +45,9 @@ app.get('/api/appTest', (req, res)=>{
 });
 // -------------------------------------------- Termina endpoints del API ----------------------------------------------------------------
 app.get("/", (req, res, next)=>{
-    res.sendfile('./public/index.html');
+    //res.sendFile('./frontend/public/index.html');
     //res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
-    //res.json({"Message":"Url shortener under construction..."})
+    res.json({"Message":"Url shortener under construction by Geordie Quiroa..."})
 });
 
 app.get("/api/getUrls"), (req, res)=>{
@@ -58,7 +59,7 @@ app.post("/apr/shorten", (req, res)=>{
     res.sendStatus(201).send("Todo esta bien.");
 });
 
-app.listen(3000, function respond(){
+app.listen(port, function respond(){
     console.log("ready!");
 });
 
