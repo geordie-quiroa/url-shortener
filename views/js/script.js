@@ -22,7 +22,9 @@ var createUrl2Api = function(){
                 _tmpUrl.info = data.dataStored2mongoDb;
                 console.log(_tmpUrl.info.shortenUrl);
                 document.getElementById("search").value = _tmpUrl.info.shortenUrl;
-                document.getElementById("link").setAttribute("href",_tmpUrl.info.shortenUrl).value = _tmpUrl.info.shortenUrl;
+                document.getElementById("link").innerHTML = (_tmpUrl.info.shortenUrl).toString();
+                document.getElementById("link2").innerHTML = "Listo!";
+                document.getElementById("link").setAttribute("href",_tmpUrl.info.shortenUrl) = _tmpUrl.info.shortenUrl;
             })
             .catch((err)=> console.log(err))
         }
