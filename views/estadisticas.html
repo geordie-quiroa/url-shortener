@@ -29,7 +29,7 @@
     <link href="css/cover.css" rel="stylesheet">
   </head>
 
-  <body>
+  <body class="text-center">
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
       <a class="navbar-brand" href="/index.html" id ="fragme">Frag.me</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,8 +50,9 @@
         </ul>
       </div>
     </nav>
-    
+    <!--
     <div class="tablita">
+        
         <table class="table table-striped table-hover">
             <thead>
             <tr>
@@ -82,8 +83,9 @@
             </tr>
         </tbody>
         </table>
-    </div>
-    <div>
+    </div> -->
+     <!--
+      <div>   
         <script type="text/x-template" id="grid-template">
           <table class="table table-striped table-hover">
             <thead>
@@ -115,7 +117,31 @@
             :columns="gridColumns"
             :filter-key="searchQuery">
           </demo-grid>
-        </div>
+        </div> -->
+      <div>
+        <script type="text/x-template" id="grid-template">
+          <table class="table table-striped table-hover text-centered">
+            <thead>
+              <tr>
+                <th v-for="key in columns"
+                  @click="sortBy(key)"
+                  :class="{ active: sortKey == key }">
+                  {{ key | capitalize }}
+                  <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="entry in filteredData">
+                <td>{{entry.visits}}</td>
+                <td>{{entry.url}}</td>
+                <td><a href="#">{{entry.shortenUrl}}</a></td>
+                <td>{{entry.createdAt}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </script>
         <div id="datos">
           <form id="search">
             Search <input name="query" v-model="searchQuery">

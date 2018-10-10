@@ -53,23 +53,18 @@ Vue.component('demo-grid', {
   })
   
   // bootstrap the demo
-  var demo = new Vue({
-    el: '#demo',
-    data: {
-      searchQuery: '',
-      gridColumns: ['name', 'power'],
-      gridData: [
-        { name: 'Chuck Norris', power: Infinity },
-        { name: 'Bruce Lee', power: 9000 },
-        { name: 'Jackie Chan', power: 7000 },
-        { name: 'Jet Li', power: 8000 }
-      ]
-    }
-  })
+
   
-  var urls = new Vuew({
+  var urls = new Vue({
       el: '#datos',
       data: {
-          
+        searchQuery:'',
+        gridColumns: ["visits", "url", "shortenUrl", "createdAt"],
+        gridData: [
+            {"_id":"5bbe88f864a01a91d4d3d0cf","url":"https://www.w3.org/Style/Examples/007/center.en.html","shortenKey":"fSWk6q5","shortenUrl":"http://frag.me:3000/fSWk6q5","visits":0,"expire_at":"2018-10-10T23:19:20.837Z","createdAt":"2018-10-10T23:19:20.838Z","updatedAt":"2018-10-10T23:19:20.838Z","__v":0},
+            {"_id":"5bbe891864a01a91d4d3d0d0","url":"https://stackoverflow.com/questions/29484431/vue-warn-cannot-find-element","shortenKey":"-sfEOlN","shortenUrl":"http://frag.me:3000/-sfEOlN","visits":2,"expire_at":"2018-10-10T23:19:52.254Z","createdAt":"2018-10-10T23:19:52.254Z","updatedAt":"2018-10-10T23:19:52.254Z","__v":0},
+            {"_id":"5bbe893364a01a91d4d3d0d1","url":"https://jsfiddle.net/yyx990803/xkkbfL3L/?utm_source=website&utm_medium=embed&utm_campaign=xkkbfL3L","shortenKey":"XySvSk8","shortenUrl":"http://frag.me:3000/XySvSk8","visits":0,"expire_at":"2018-10-10T23:20:19.573Z","createdAt":"2018-10-10T23:20:19.573Z","updatedAt":"2018-10-10T23:20:19.573Z","__v":0}
+        ]
+
       }
   })
