@@ -9,9 +9,10 @@ var generateTinyUrl = (req, res)=>{
         var url2save = new Url({
             url: req.body.longUrl,
             shortenKey:_tmpKey,
-            shortenUrl: ("frag.me/"+ _tmpKey),
+            shortenUrl: ("http://frag.me:3000/"+ _tmpKey),
             visits:0
         });
+        _tmpKey=0;
         url2save.save().then(data => {
             res.status(201).send({dataStored2mongoDb: data, success:'true', message:'created Tiny Url'});
         }).catch(err => {
@@ -22,6 +23,7 @@ var generateTinyUrl = (req, res)=>{
         //res.status(201).send({success:'true', message:'created tiny Url'});
     }
 };
+
 var getUrls = (req, res) => {
     Url.find()
     .then(urls => {

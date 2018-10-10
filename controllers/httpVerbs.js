@@ -1,4 +1,4 @@
-var chars= "0123456789abcdefghiklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ&-", charsAvailable= chars.length, baseUrl="frag.me/";
+var chars= "0123456789abcdefghiklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ&-", charsAvailable= chars.length, baseUrl="http://frag.me:3000/";
 var tmpJson = [
     {
     "shortenKey": "bAf1&cQ",

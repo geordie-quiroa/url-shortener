@@ -18,6 +18,7 @@ app.use(function (req, res, next) {
 var mongoose = require('mongoose'), dev_db = require('./configs/mongoDB.config'),
 mongoDB = process.env.MONGODB_URI || dev_db.url;
 mongoose.Promise = global.Promise;
+mongoose.set('useCreateIndex', true)
 mongoose.connect(mongoDB, {
     useNewUrlParser: true
 }).then(() => {
@@ -33,6 +34,8 @@ app.post('/api/createUrl', controller.generateTinyUrl);
 app.get('/api/urls', controller.getUrls);
 
 app.get('/api/getUrl/:shortenKey', controller.getLongUrl);
+
+app.get('/:shortenKey', controller.getLongUrl);
 
 app.delete('/api/deleteUrl/:shortenKey', controller.deleteUrl);
 
