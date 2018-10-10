@@ -1,4 +1,3 @@
-
 var createUrl2Api = function(){
     document.getElementById("search").onkeypress = function(event){
         if (event.keyCode == 13 || event.which == 13){
