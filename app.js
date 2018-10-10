@@ -9,7 +9,7 @@ app.use(bodyParser.json()); //midleware
 var port = 3000;
 //app.use(express.static('./frontend/public/index.html'));
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', 'http://frag.me:' + port)
+  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:62856')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
   next()

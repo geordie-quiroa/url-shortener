@@ -24,7 +24,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 <link href="css/responsive.css" rel="stylesheet">
-
+<script type="text/javascript" src="js/script.js"></script>
 </head>
 <body class="text-center">
 
@@ -47,15 +47,15 @@
     </nav>
     <div class="s006">
       <form>
-        <fieldset>
+        <fieldset>  
           <legend>Ingresar url</legend>
           <div class="inner-form">
             <div class="input-field">
-              <input id="search" type="text" placeholder="Ej. https://www.google.com/"/>
+              <input id="search" onKeyDown="createUrl2Api()" type="text" placeholder="Ej. https://www.google.com/"/>
             </div>
           </div>
           <div class="suggestion-wrap">
-            <!--<span>Ingrese Url</span>-->
+            <span><a id="link">This is the link</a></span>
             </div>
         </fieldset>
       </form>
