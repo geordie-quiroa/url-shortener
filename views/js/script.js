@@ -1,3 +1,4 @@
+
 var createUrl2Api = function(){
     document.getElementById("search").onkeypress = function(event){
         if (event.keyCode == 13 || event.which == 13){
@@ -7,7 +8,7 @@ var createUrl2Api = function(){
             data2send = {
                 longUrl:inputUrl
             };
-            alert(inputUrl);
+            //alert(inputUrl);
             //postUrl2Api(document.getElementById("search").value);
             fetch(urlApi, {
                 method:'POST',
@@ -23,12 +24,17 @@ var createUrl2Api = function(){
                 document.getElementById("search").value = _tmpUrl.info.shortenUrl;
                 document.getElementById("link").innerHTML = (_tmpUrl.info.shortenUrl).toString();
                 document.getElementById("link2").innerHTML = "Listo!";
-                document.getElementById("link").setAttribute("href",_tmpUrl.info.shortenUrl) = _tmpUrl.info.shortenUrl;
+                _tmpUrl.info.shortenUrl = document.getElementById("link").setAttribute("href",_tmpUrl.info.shortenUrl);
+                setTimeout("location.reload(true);",7000);
             })
             .catch((err)=> console.log(err))
         }
     };
 }
+
+function timedRefresh(timeoutPeriod) {
+	setTimeout("location.reload(true);",timeoutPeriod);
+};
 
 var postUrl2Api = ()=>{
     var urlApi = "http://frag.me:3000/api/createUrl";

@@ -53,7 +53,7 @@ var getLongUrl = (req, res) => {
             console.log(err);
         }
         //updateVisits(URL);
-        res.redirect(URL.url, 307);
+        res.redirect(307, URL.url);
         //res.status(307).send(URL.url);
     }).catch(err => {
         if(err.kind === 'ObjectId') {

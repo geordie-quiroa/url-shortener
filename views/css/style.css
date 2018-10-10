@@ -4,6 +4,63 @@ body {
   background-color: rgba(23, 23, 23, 0.76);
 }
 
+/* ======================================================================== Tabla de Vue JS */
+
+
+
+th {
+  background-color: #093d4d;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*td {
+  background-color: #343434;
+}
+*/
+th, td {
+  min-width: 120px;
+  padding: 10px 20px;
+}
+
+th.active {
+  color: #fff;
+}
+
+th.active .arrow {
+  opacity: 1;
+}
+
+.arrow {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  margin-left: 5px;
+  opacity: 0.66;
+}
+
+.arrow.asc {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid #fff;
+}
+
+.arrow.dsc {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #fff;
+}
+
+
+
+
+
+/* ========================================================================= Termina Tabla de vue js */
 .red-square table{
     margin-top: 500px;
     background-color: rgba(13, 8, 8, 0.14);
@@ -459,7 +516,6 @@ legend {
   -ms-flex-align: center;
       align-items: center;
   font-family: 'Poppins', sans-serif;
-  background: url("../images/Searchs_006.png");
   background-size: cover;
   background-position: center center;
   padding: 15px;
@@ -472,10 +528,10 @@ legend {
 
 .s006 form legend {
   font-size: 36px;
-  color: #fff;
-  font-weight: 800;
+  color: rgba(255, 255, 255, 0.79);
+  font-weight: 400;
   text-align: center;
-  margin-bottom: 59px;
+  margin-bottom: 39px;
 }
 
 .s006 form .inner-form {
@@ -565,7 +621,7 @@ legend {
   background: rgba(0, 0, 0, 0.6);
   padding: 0 15px;
   line-height: 32px;
-  color: #fff;
+  color: #06879f;
   border-radius: 16px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -586,3 +642,14 @@ legend {
   }
 }
 
+.tablita{
+    margin-top: 0px;
+}
+
+#fragme {
+    color: #06879f; 
+}
+
+#link2{
+    color: #06879f; 
+}

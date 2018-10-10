@@ -23,13 +23,13 @@
 <!-- Responsive -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-<link href="css/responsive.css" rel="stylesheet">
+<!--<link href="css/responsive.css" rel="stylesheet">-->
 <script type="text/javascript" src="js/script.js"></script>
 </head>
 <body class="text-center">
 
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Frag.me</a>
+      <a class="navbar-brand" href="#" id ="fragme">Frag.me</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample06" aria-controls="navbarsExample06" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>  
@@ -42,20 +42,23 @@
           <li class="nav-item">
             <a class="nav-link" href="estadisticas.html">Stats</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="estadisticas.html">Geordie</a>
+          </li>
         </ul>
       </div>
     </nav>
     <div class="s006">
       <form>
         <fieldset>  
-          <legend>Ingresar url</legend>
+          <legend>Ingresa el url que deseas acortar</legend>
           <div class="inner-form">
             <div class="input-field">
-              <input id="search" onKeyDown="createUrl2Api()" type="text" placeholder="Ej. https://www.google.com/"/>
+              <input id="search" onKeyDown="createUrl2Api()" type="text" placeholder="Ej. https://www.google.com/                                                                         (ENTER)"/>
             </div>
           </div>
           <div class="suggestion-wrap">
-            <span><a id="link" target="_blank">Preparando frag.me ...</a></span>
+            <span><a id="link" target="_blank">&rarr; Espera tu frag.me aqu&iacute; &larr;</a></span>
               <span><a id="link2"></a></span>
             </div>
         </fieldset>
