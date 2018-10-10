@@ -4,13 +4,14 @@ body {
   background-color: rgba(23, 23, 23, 0.76);
 }
 
-.red-square {
+.red-square table{
+    margin-top: 500px;
     background-color: rgba(13, 8, 8, 0.14);
     width: 500px;
     height: 500px;
     transform: translate(-50%, -50%);
     margin: 0 auto;
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     text-align: center;
