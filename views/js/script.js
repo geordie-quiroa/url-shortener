@@ -25,7 +25,7 @@ var createUrl2Api = function(){
                 document.getElementById("link").innerHTML = (_tmpUrl.info.shortenUrl).toString();
                 document.getElementById("link2").innerHTML = "Listo!";
                 _tmpUrl.info.shortenUrl = document.getElementById("link").setAttribute("href",_tmpUrl.info.shortenUrl);
-                setTimeout("location.reload(true);",7000);
+                setTimeout("location.reload(true);",7000); // Se refresca cada 7 segundos
             })
             .catch((err)=> console.log(err))
         }

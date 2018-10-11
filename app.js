@@ -1,5 +1,6 @@
 var express = require('express'), httpVerbs= require('./controllers/httpVerbs'), 
-bodyParser = require('body-parser'), app = express(), http = require('http'), controller = require('./controllers/url.controller');
+bodyParser = require('body-parser'), app = express(), http = require('http'), controller = require('./controllers/url.controller'),
+path = require('path');
 app.use(bodyParser.urlencoded({extended:true})); // esto es para parsear el body & middleware
 app.use(bodyParser.json()); //midleware
 //require('./routes/url.router')(app);
@@ -14,6 +15,10 @@ app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
   next()
 });
+app.use(express.static(__dirname + '/views'));
+//Store all HTML files in view folder.
+app.use(express.static(__dirname + '/views/scripts'));
+
 // variables base de datos -------------------------------------------------------------------------------------
 var mongoose = require('mongoose'), dev_db = require('./configs/mongoDB.config'),
 mongoDB = process.env.MONGODB_URI || dev_db.url;
@@ -48,9 +53,9 @@ app.get('/api/appTest', (req, res)=>{
 });
 // -------------------------------------------- Termina endpoints del API ----------------------------------------------------------------
 app.get("/", (req, res, next)=>{
-    //res.sendFile('./frontend/public/index.html');
+    res.sendFile(path.join(__dirname+'/views/index.html'));
     //res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
-    res.json({"Message":"Url shortener under construction by Geordie Quiroa..."})
+    //res.json({"Message":"Url shortener under construction by Geordie Quiroa..."})
 });
 
 app.get("/api/getUrls"), (req, res)=>{
