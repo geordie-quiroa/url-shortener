@@ -1,14 +1,14 @@
-var baseUrl="frag.me/", chars= "0123456789abcdefghiklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ&-", charsAvailable= chars.length;
+var baseUrl="http://localhost:3000/", chars= "0123456789abcdefghiklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ&-", charsAvailable= chars.length;
 var tmpJson = [
     {
     "shortenKey": "bAf1&cQ",
     "longUrl":"https://www.github.com/watch?v=LoVoqVqzMyQ",
-    "tinyUrl":"frag.me/bAf1&cQ",
+    "tinyUrl":"http://localhost:3000/bAf1&cQ",
     "visits":0
     }, {
     "shortenKey":"GNktcm",
     "longUrl":"https://webapplog.com/url-parameters-and-routing-in-express-js/",
-    "tinyUrl":"frag.me/GNktcm",
+    "tinyUrl":"http://localhost:3000/GNktcm",
     "visits":0
     }
   ];

@@ -1,4 +1,4 @@
-// register the grid component
+
 Vue.component('demo-grid', {
     template: '#grid-template',
     props: {
@@ -63,7 +63,7 @@ Vue.component('demo-grid', {
         gridData: []
       },
       mounted(){
-          this.getPosts("http://frag.me:3000/api/urls");
+          this.getPosts("http://localhost:3000/api/urls");
       },
       methods:{
           getPosts(url){

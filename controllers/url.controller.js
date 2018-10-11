@@ -9,7 +9,7 @@ var generateTinyUrl = (req, res)=>{
         var url2save = new Url({
             url: req.body.longUrl,
             shortenKey:_tmpKey,
-            shortenUrl: ("http://frag.me:3000/"+ _tmpKey),
+            shortenUrl: ("http://localhost:3000/"+ _tmpKey),
             visits:0
         });
         _tmpKey=0;
@@ -93,7 +93,7 @@ var test = (req,res)=>{
     res.send("El url.controller funciona!");
 };
 var getTest = (req, res)=>{
-    res.send(httpVerbs.getTinyUrl("frag.me/bAf1&cQ"))
+    res.send(httpVerbs.getTinyUrl("http://localhost:3000/bAf1&cQ"))
 };
 module.exports.generateTinyUrl = generateTinyUrl, module.exports.getUrls=getUrls, module.exports.getLongUrl = getLongUrl, module.exports.deleteUrl = deleteUrl,
 module.exports.test = test, module.exports.getTest = getTest;

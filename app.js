@@ -1,5 +1,5 @@
 //'use strict';
-
+//http://localhost:3000/
 var express = require('express'), httpVerbs= require('./controllers/httpVerbs'), 
 bodyParser = require('body-parser'), app = express(), http = require('http'), controller = require('./controllers/url.controller'),
 path = require('path');
@@ -48,7 +48,7 @@ app.get('/api/urlsTest', controller.getTest); // sin el router y con el controla
 app.get('/api/test', controller.test);
 
 app.get('/api/appTest', (req, res)=>{
-    res.send(httpVerbs.getTinyUrl("frag.me/GNktcm")); // sin router y sin controlador
+    res.send(httpVerbs.getTinyUrl("http://localhost:3000/GNktcm")); // sin router y sin controlador
 });
 // -------------------------------------------- Termina endpoints del API ----------------------------------------------------------------
 app.get("/", (req, res, next)=>{

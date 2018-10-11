@@ -4,7 +4,7 @@ var createUrl2Api = function(){
         if (event.keyCode == 13 || event.which == 13){
             //alert("Llego aqui");
             event.preventDefault();
-            var inputUrl = document.getElementById("search").value, urlApi = "http://frag.me:3000/api/createUrl", _tmpUrl = {},
+            var inputUrl = document.getElementById("search").value, urlApi = "http://localhost:3000/api/createUrl", _tmpUrl = {},
             data2send = {
                 longUrl:inputUrl
             };
@@ -37,24 +37,9 @@ function refreshNow() {
 };
 
 var postUrl2Api = ()=>{
-    var urlApi = "http://frag.me:3000/api/createUrl";
+    var urlApi = "http://localhost:3000/api/createUrl";
     var data2send = {
         longUrl:document.getElementById("search").value
     };
     axios.post(urlApi, data2send);
 };
-
-function postData(event){
-    event.preventDefault();
-
-    let tittle = document.getElementById('tittle').value;
-    let body = document.getElementById('body').value;
-
-    fetch('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST',
-        headers : new Headers(),
-        body:JSON.stringify({tittle:tittle, body:body})
-    }).then((res) => res.json())
-    .then((data) =>  console.log(data))
-    .catch((err)=>console.log(err))
-}

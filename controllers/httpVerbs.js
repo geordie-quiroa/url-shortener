@@ -1,4 +1,4 @@
-// ----------------------------- Todo lo comentado era util cuando la db del API era local----------------------------------------------------------
+// ----------------------------- Todo lo comentado era util cuando la db del API era local, CONSUME RAM ----------------------------------------------------------
 
 var chars= "0123456789abcdefghiklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ&-", charsAvailable= chars.length; // baseUrl="http://frag.me:3000/";
 /*var tmpJson = [
