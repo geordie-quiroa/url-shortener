@@ -23,7 +23,6 @@ var createUrl2Api = function(){
                 console.log(_tmpUrl.info.shortenUrl);
                 document.getElementById("search").value = _tmpUrl.info.shortenUrl;
                 document.getElementById("link").innerHTML = "<i class='fas fa-link'></i> "+(_tmpUrl.info.shortenUrl).toString();
-                document.getElementById("link1").innerHTML = "l";
                 _tmpUrl.info.shortenUrl = document.getElementById("link").setAttribute("href",_tmpUrl.info.shortenUrl);
                 document.getElementById("leyenda").innerHTML= "<i id='chequesin' class='far fa-check-circle'></i> Tu <a id='fragme'>frag.me</a>  est&aacute; listo!"
                 setTimeout("location.reload(true);",7000); // Se refresca cada 7 segundos
