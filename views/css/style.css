@@ -4,10 +4,13 @@ body {
   background-color: rgba(23, 23, 23, 0.76);
 }
 
-a:link{
+a:link {
     color:#c6c5c5;
 }
 
+a:visited{
+    color:#c6c5c5;
+}
 a:hover{
     color: azure;
     text-decoration: none;

@@ -10,7 +10,7 @@ app.use(bodyParser.json()); //midleware
 var port = 3000;
 //app.use(express.static('./frontend/public/index.html'));
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:62856')
+  //res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:62856')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
   next()
@@ -37,8 +37,6 @@ app.post('/api/createUrl', controller.generateTinyUrl);
 
 app.get('/api/urls', controller.getUrls);
 
-app.get('/api/getUrl/:shortenKey', controller.getLongUrl);
-
 app.get('/:shortenKey', controller.getLongUrl);
 
 app.delete('/api/deleteUrl/:shortenKey', controller.deleteUrl);
@@ -55,15 +53,6 @@ app.get("/", (req, res, next)=>{
     res.sendFile('index.html');
     //res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
     //res.json({"Message":"Url shortener under construction by Geordie Quiroa..."})
-});
-
-app.get("/api/getUrls"), (req, res)=>{
-    res.status(200).send(controller.getTest(tinyUrl="frag.me/GNkcm"));
-};
-
-app.post("/apr/shorten", (req, res)=>{
-    res.json({url: "https://spring.io/nodeJSdeveloping/REST"});
-    res.sendStatus(201).send("Todo esta bien.");
 });
 
 app.listen(port, function respond(){

@@ -5,8 +5,6 @@ var UrlSchema = new Schema({
     shortenUrl:{type: String, required: true, max: 100},
     shortenKey:{type: String, required: true, max: 100}, // es el string generado aleatoriamente, no incluye el url base (frag.me/)
     visits:{type: Number, required: true, max: 100},
-    expire_at: {type: Date, default: Date.now, expires: 200}
-},{
-    timestamps: true
+    createdAt: {type: Date, default: Date.now, expires: 60*60*24*0.5} //12 horas expiran / 200 
 });
 module.exports = mongoose.model('Url', UrlSchema);

@@ -68,14 +68,14 @@ var getLongUrl = (req, res) => {
 };
 
 var deleteUrl = (req, res) => {
-    Url.findOneAndDelete(req.params.shortenKey)
+    Url.findOneAndDelete({"shortenKey":req.params.shortenKey})
     .then(URL => {
         if(!URL) {
             return res.status(404).send({
                 message: "Url not found with shortenKey " + req.params.shortenKey
             });
-        }
-        res.send({message: "Url deleted from DB successfully!"});
+        };
+        res.status(200).send({message: "Url deleted from DB successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({

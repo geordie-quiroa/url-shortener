@@ -1,5 +1,7 @@
-var chars= "0123456789abcdefghiklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ&-", charsAvailable= chars.length, baseUrl="http://frag.me:3000/";
-var tmpJson = [
+// ----------------------------- Todo lo comentado era util cuando la db del API era local----------------------------------------------------------
+
+var chars= "0123456789abcdefghiklmopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ&-", charsAvailable= chars.length; // baseUrl="http://frag.me:3000/";
+/*var tmpJson = [
     {
     "shortenKey": "bAf1&cQ",
     "longUrl":"https://www.github.com/watch?v=LoVoqVqzMyQ",
@@ -41,7 +43,7 @@ var getTinyUrl = (tinyUrl2search)=>{
         //};
     //};
 };
-
+*/
 var createTinyUrl = (urlInput)=>{
     //if (err) return console.error(err);
     var lar = urlInput.length;
@@ -55,12 +57,12 @@ var createTinyUrl = (urlInput)=>{
     if (shortenDir.length >7){
         shortenDir = shortenDir.substring(0,7);
     };
-    var shortenUrl = (baseUrl+shortenDir).toString();
-    insert2db(urlInput,shortenUrl, shortenDir);
+    //var shortenUrl = (baseUrl+shortenDir).toString();
+    //insert2db(urlInput,shortenUrl, shortenDir);
     return shortenDir;
 };
-
-var deleteUrl=(tinyUrl2delete)=>{
+/*
+var deleteUrl=(tinyUrl2delete)=>{ 
     var i=0;
     var n=0;
     while(n!=1 && i<tmpJson.length){
@@ -81,10 +83,14 @@ function leerJSON(json){
     console.log("long Url: "+ json[i].longUrl+" - tiny Url: "+ json[i].tinyUrl);
     }
   };
+  */
+
+
 module.exports.createTinyUrl = createTinyUrl;
-module.exports.getTinyUrl = getTinyUrl;
-module.exports.urls = tmpJson;
-module.exports.deleteUrl = deleteUrl;
+
+//module.exports.getTinyUrl = getTinyUrl;
+//module.exports.urls = tmpJson;
+//module.exports.deleteUrl = deleteUrl;
 if (require.main === module) {
     var prueba = createTinyUrl("https://www.github.com/");
     var prueba2 = createTinyUrl("https://www.geordiequiroa.co/");
