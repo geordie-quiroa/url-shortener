@@ -22,9 +22,10 @@ var createUrl2Api = function(){
                 _tmpUrl.info = data.dataStored2mongoDb;
                 console.log(_tmpUrl.info.shortenUrl);
                 document.getElementById("search").value = _tmpUrl.info.shortenUrl;
-                document.getElementById("link").innerHTML = (_tmpUrl.info.shortenUrl).toString();
-                document.getElementById("link2").innerHTML = "Listo!";
+                document.getElementById("link").innerHTML = "<i class='fas fa-link'></i> "+(_tmpUrl.info.shortenUrl).toString();
+                document.getElementById("link1").innerHTML = "l";
                 _tmpUrl.info.shortenUrl = document.getElementById("link").setAttribute("href",_tmpUrl.info.shortenUrl);
+                document.getElementById("leyenda").innerHTML= "<i id='chequesin' class='far fa-check-circle'></i> Tu <a id='fragme'>frag.me</a>  est&aacute; listo!"
                 setTimeout("location.reload(true);",7000); // Se refresca cada 7 segundos
             })
             .catch((err)=> console.log(err))
@@ -32,8 +33,8 @@ var createUrl2Api = function(){
     };
 }
 
-function timedRefresh(timeoutPeriod) {
-	setTimeout("location.reload(true);",timeoutPeriod);
+function refreshNow() {
+	setTimeout("location.reload(true);",500);
 };
 
 var postUrl2Api = ()=>{

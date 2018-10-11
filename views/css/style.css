@@ -4,12 +4,38 @@ body {
   background-color: rgba(23, 23, 23, 0.76);
 }
 
+a:link{
+    color:#c6c5c5;
+}
+
+a:hover{
+    color: azure;
+    text-decoration: none;
+}
+
+#heart{
+    color: red;
+}
+
+#nodejs{
+    color: greenyellow;
+}
+
+#vuejs{
+    color:darkgreen;
+}
+#js{
+    color: yellow;
+}
+
+#chequesin{
+    color:#438321;
+}
 /* ======================================================================== Tabla de Vue JS */
 
 #search {
     padding: 20px;
 }
-
 
 #search input[type="text"] {
     background: url(search-white.png) no-repeat 10px 6px #444;
@@ -669,7 +695,7 @@ legend {
   padding: 0 15px;
 }
 
-.s006 form .suggestion-wrap span {
+.s006 form .suggestion-wrap span{
   font-size: 14px;
   font-family: 'Helvetica', sans-serif;
   display: inline-block;

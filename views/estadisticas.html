@@ -9,7 +9,7 @@
     <link href="css/style.css" rel="stylesheet">
     <!--
         ------------------------- Se refresca cada minuto ---------------------------------------------------------------------------------
--->
+
     <meta http-equiv="refresh" content="6" />
     <!-- Meta Data para buscadores Linked flaticon-->
     <meta http-equiv="Content-Language" content="es"/>
@@ -30,6 +30,7 @@
     <!--<link href="css/responsive.css" rel="stylesheet">-->
     <script type="text/javascript" src="js/script.js"></script>
     <link href="css/cover.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   </head>
 
   <body class="text-center">
@@ -48,79 +49,11 @@
             <a class="nav-link" href="estadisticas.html">Stats <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/geordie-quiroa/url-shortener" target="_blank">Source Code</a>
+            <a class="nav-link" href="https://github.com/geordie-quiroa/url-shortener" target="_blank">Source Code <span class="fab fa-github"></span></a>
           </li>
         </ul>
       </div>
     </nav>
-    <!--
-    <div class="tablita">
-        
-        <table class="table table-striped table-hover">
-            <thead>
-            <tr>
-            <th>Visits</th>
-            <th>Long Url</th>
-            <th>Frag.me</th>
-            <th>Created At</th>
-            </tr>
-        </thead>
-        <tbody id="frontEndApp">
-            <tr>
-            <td>1</td>
-            <td>https://scotch.io/tutorials/how-to-use-the-javascript-fetch-api-to-get-data</td>
-            <td><a href="http://frag.me:3000/fhLPG&W">http://frag.me:3000/fhLPG&W"</a></td>
-            <td>2018-10-10T07:26:59.152Z</td>
-            </tr>
-            <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            </tr>
-            <tr>
-            <td>3</td>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-            </tr>
-        </tbody>
-        </table>
-    </div> -->
-     <!--
-      <div>   
-        <script type="text/x-template" id="grid-template">
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr>
-                <th v-for="key in columns"
-                  @click="sortBy(key)"
-                  :class="{ active: sortKey == key }">
-                  {{ key | capitalize }}
-                  <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="entry in filteredData">
-                <td v-for="key in columns">
-                  {{entry[key]}}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </script>
-        <div id="demo">
-          <form id="search">
-            Search <input name="query" v-model="searchQuery">
-          </form>
-          <demo-grid
-            :data="gridData"
-            :columns="gridColumns"
-            :filter-key="searchQuery">
-          </demo-grid>
-        </div> -->
       <div>
         <script type="text/x-template" id="grid-template">
           <table class="table table-striped table-hover text-centered">
@@ -139,7 +72,7 @@
               <tr v-for="entry in filteredData">
                 <td>{{entry.visits}}</td>
                 <td>{{entry.url}}</td>
-                <td><a :href="entry.shortenUrl" target="_blank">{{entry.shortenUrl}}</a></td>
+                <td><a :href="entry.shortenUrl" target="_blank" onClick="refreshNow()">{{entry.shortenUrl}}</a></td>
                 <td>{{entry.createdAt}}</td>
               </tr>
             </tbody>
