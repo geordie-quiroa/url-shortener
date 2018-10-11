@@ -1,3 +1,5 @@
+//'use strict';
+
 var express = require('express'), httpVerbs= require('./controllers/httpVerbs'), 
 bodyParser = require('body-parser'), app = express(), http = require('http'), controller = require('./controllers/url.controller'),
 path = require('path');
