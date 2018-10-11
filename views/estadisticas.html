@@ -136,16 +136,17 @@
               <tr v-for="entry in filteredData">
                 <td>{{entry.visits}}</td>
                 <td>{{entry.url}}</td>
-                <td><a href="#">{{entry.shortenUrl}}</a></td>
+                <td><a :href="entry.shortenUrl" target="_blank">{{entry.shortenUrl}}</a></td>
                 <td>{{entry.createdAt}}</td>
               </tr>
             </tbody>
           </table>
         </script>
+        
         <div id="datos">
-          <form id="search">
-            Search <input name="query" v-model="searchQuery">
-          </form>
+            <form id="search">
+              <input name="query" type="text" size="40" placeholder="Buscar en la tabla..." v-model="searchQuery" />
+            </form>
           <demo-grid
             :data="gridData"
             :columns="gridColumns"
@@ -158,6 +159,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="js/frontEndApp.js"></script>
   </body>
 </html>
