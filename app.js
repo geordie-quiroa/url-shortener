@@ -17,7 +17,6 @@ app.use(function (req, res, next) {
 });
 app.use(express.static(__dirname + '/views'));
 //Store all HTML files in view folder.
-app.use(express.static(__dirname + '/views/scripts'));
 
 // variables base de datos -------------------------------------------------------------------------------------
 var mongoose = require('mongoose'), dev_db = require('./configs/mongoDB.config'),
@@ -53,7 +52,7 @@ app.get('/api/appTest', (req, res)=>{
 });
 // -------------------------------------------- Termina endpoints del API ----------------------------------------------------------------
 app.get("/", (req, res, next)=>{
-    res.sendFile(path.join(__dirname+'/views/index.html'));
+    res.sendFile('index.html');
     //res.send(httpVerbs.getTinyUrl("frag.me/GNktcm"));
     //res.json({"Message":"Url shortener under construction by Geordie Quiroa..."})
 });
