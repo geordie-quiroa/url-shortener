@@ -31,7 +31,6 @@ localhost en los siguientes archivos, de lo contrario, saltar este paso:
 
 * `controllers/url.controller.js`
 * `views/js/frontEndApp.js`
-* `views/js/frontEndApp.js`
 * `views/js/script.js`
 
 3. Ingresar al directorio descompreso y correr los demás comandos:
