@@ -1,5 +1,7 @@
+<img src="images/icon.png" align="right" />
 # url-shortener
 Desarrollo en node js que consume un restfulAPI para acortar URL´s realizando requests a una base de datos Mongo.
+![](images/url-shortener.gif)
 ### Backend
 **Utiliza**:
 * [NodeJS](https://github.com/nodejs/node)
