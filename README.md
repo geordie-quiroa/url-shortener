@@ -25,21 +25,23 @@ Tener disponible en máquina:
 
 ## Start url-shortener en máquina local
 1. Descargar el .zip del release tag v1.1.0
-2. Ingresar al directorio descompreso y correr los demás comandos:
-```bash
-$ cd ./url-shortener-1.1.0
-$ npm install
-$ node ./app.js
-```
-- Si se va a utilizar otra dirección ip distinta a localhost, sustituir las líneas de código que utilizan 
-localhost en los siguientes archivos:
+
+2. Si se va a utilizar otra dirección ip distinta a localhost, sustituir las líneas de código que utilizan
+localhost en los siguientes archivos, de lo contrario, saltar este paso:
 
 * `controllers/url.controller.js`
 * `views/js/frontEndApp.js`
 * `views/js/frontEndApp.js`
 * `views/js/script.js`
 
-3. Visitar localhost en puerto 3000 
+3. Ingresar al directorio descompreso y correr los demás comandos:
+```bash
+$ cd ./url-shortener-1.1.0
+$ npm install
+$ node ./app.js
+```
+
+4. Visitar localhost en puerto 3000 
 * [localhost](http://localhost:3000/)
 
 ## Authors
