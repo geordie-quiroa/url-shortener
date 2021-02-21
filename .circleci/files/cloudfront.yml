@@ -5,6 +5,9 @@ Parameters:
   WorkflowID:
     Description: Unique pipeline identifier.
     Type: String
+  InstanceIP:
+    Description: Backend instance IP.
+    Type: String
 
 Resources:
   CloudFrontOriginAccessIdentity:
@@ -18,7 +21,8 @@ Resources:
     Properties:
       DistributionConfig:
         Origins:
-          - DomainName: !Sub "backend-${WorkflowID}.us-west-2.compute.amazonaws.com"
+          # - DomainName: !Sub "backend-${WorkflowID}.us-west-2.compute.amazonaws.com"
+          - DomainName: !Sub "${InstanceIP}.us-west-2.compute.amazonaws.com"
             Id: webpage
             CustomOriginConfig:
               HTTPPort: 80
