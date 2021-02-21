@@ -137,9 +137,6 @@ jobs:
           command: |
             apk add --update tar gzip ansible curl
       - run:
-          name: Check there is .env file at workspace.
-          command: cat .env
-      - run:
           name: Configure server with ansible
           no_output_timeout: 30m
           command: |
