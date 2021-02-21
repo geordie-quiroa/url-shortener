@@ -3,6 +3,7 @@
 var express = require('express'), httpVerbs= require('./controllers/httpVerbs'), 
 bodyParser = require('body-parser'), app = express(), http = require('http'), controller = require('./controllers/url.controller'),
 path = require('path');
+var cors = require('cors');
 app.use(bodyParser.urlencoded({extended:true})); // esto es para parsear el body & middleware
 app.use(bodyParser.json()); //midleware
 //require('./routes/url.router')(app);
@@ -21,6 +22,7 @@ app.use(function (req, res, next) {
 });
 app.use(express.static(__dirname + '/views'));
 //Store all HTML files in view folder.
+app.use(cors())
 
 // variables base de datos -------------------------------------------------------------------------------------
 var mongoose = require('mongoose'), dev_db = require('./configs/mongoDB.config'),

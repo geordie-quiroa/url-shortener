@@ -38,7 +38,7 @@ Resources:
 Outputs:
   WorkflowID:
     Value: !Sub ${WorkflowID}
-    Description: URL for website hosted on S3
+    Description: URL for webapp hosted on an EC2 instance.
     Export:
       Name: WorkflowID
   StaticDNS:
