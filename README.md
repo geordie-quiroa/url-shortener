@@ -2,6 +2,8 @@
 
 # url-shortener
 
+[![geordie-quiroa](https://circleci.com/gh/geordie-quiroa/url-shortener/tree/main.svg?style=shield)](https://app.circleci.com/pipelines/github/geordie-quiroa/url-shortener)
+
 Desarrollo en node js que consume un restfulAPI para acortar URL´s realizando requests a una base de datos Mongo.
 
 ![](images/url-shortener.gif)
