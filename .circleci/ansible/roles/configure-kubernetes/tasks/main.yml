@@ -2,10 +2,11 @@
 - name: Downloading Kubernetes.
   become: yes
   shell: |
-    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 - name: Fetching Kubernetes binaries checksum.
+  become: yes
   shell: |
-    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
 - name: Update apt packages.
   become: yes
   apt:
