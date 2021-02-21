@@ -58,7 +58,7 @@ app.get("/", (req, res, next)=>{
 });
 
 app.listen(port, function respond(){
-    console.log("ready!");
+    console.log("App is ready, listening on port");
 });
 
 //console.log(httpVerbs.createTinyUrl("http://google.com"));

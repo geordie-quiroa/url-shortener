@@ -1,3 +1,3 @@
 module.exports = {
-    url: 'mongodb://urls-admin:ur1s-adm!n@ds125073.mlab.com:25073/urls'
+    url: 'mongodb+srv://urls-admin:ur1s-adm!n@url-shortener-cluster.xa55a.mongodb.net/urls?retryWrites=true&w=majority'
 }
