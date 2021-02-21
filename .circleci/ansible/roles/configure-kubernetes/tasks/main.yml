@@ -2,15 +2,15 @@
 - name: Downloading Kubernetes.
   become: yes
   shell: |
-    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 - name: Fetching Kubernetes binaries checksum.
+  shell: |
+    echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+- name: Update apt packages.
+  become: yes
+  apt:
+    update_cache: yes
+- name: Installing kubectl binaries
   become: yes
   shell: |
-    curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-- name: Validating Kubernetes binaries checksum.
-  shell: |
-    echo "$(<kubectl.sha256) kubectl" | sha256sum --check
-- name: Installing kubectl  binaries
-  become: yes
-  shell: |
-    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    apt-get install -y kubectl
