@@ -1,0 +1,77 @@
+version: 2.1
+orbs:
+  slack: circleci/slack@4.1
+commands:
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    parameters:
+      workflow_id:
+        type: "string"
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name backend-<< parameters.workflow_id >>
+            aws cloudformation delete-stack --stack-name frontend-<< parameters.workflow_id >>
+            aws s3 rb s3://udapeople-<< parameters.workflow_id >> --force
+  revert-migrations:
+    description: Revert the last migration if successfully run in the current workflow.
+    parameters:
+      workflow_id:
+        type: "string"
+    steps:
+      - run:
+          name: Revert migrations
+          when: on_fail
+          command: |
+            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
+            #SUCCESS = 1
+            SUCCESS=$(curl -H "token: 32f0f419-eff1-45b7-9ac4-fe8b3ab08734" \
+                --request GET \
+                https://api.memstash.io/values/migrations-<< parameters.workflow_id >>)
+            echo $SUCCESS
+            if(( $SUCCESS==1 ));
+            then
+              cd backend
+              npm i
+              npm run migration:revert
+            fi
+jobs:
+  build-app:
+    docker:
+      - image: circleci/node:12.14.1
+    steps:
+      - checkout
+      - restore_cache:
+          keys: [build-app]
+      - run:
+          name: Build app resources.
+          command: |
+            make lint && make build
+      - save_cache:
+          paths: [node_modules]
+          key: build-app
+  scan-backend:
+    docker:
+      # Docker image here
+      - image: circleci/node:12.14.1
+    steps:
+      # Checkout code from git
+      - checkout
+      # Restore from cache
+      - restore_cache:
+          keys: [build-app]
+      - run:
+          name: Analyze backend.
+          command: |
+            npm audit fix --force
+      - save_cache:
+          paths: [node_modules]
+          key: build-app
+workflows:
+  prod-deployment:
+    jobs:
+      - build-app
+      - scan-backend:
+          requires: [build-app]
