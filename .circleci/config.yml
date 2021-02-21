@@ -112,7 +112,7 @@ jobs:
       - run:
           name: Add .env vars to backend distro
           command: |
-            export APP_ADRR = $(aws ec2 describe-instances \
+            APP_ADRR = $(aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=url-shortener-gjqb161" \
               --output text)
