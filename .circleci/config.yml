@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Build app resources.
           command: |
-            make lint && make build
+            make build && make lint
       - save_cache:
           paths: [node_modules]
           key: build-app
