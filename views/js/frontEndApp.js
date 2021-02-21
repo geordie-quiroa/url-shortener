@@ -63,7 +63,7 @@ Vue.component('demo-grid', {
         gridData: []
       },
       mounted(){
-          this.getPosts("http://localhost:3000/api/urls");
+          this.getPosts("http://localhost:80/api/urls");
       },
       methods:{
           getPosts(url){

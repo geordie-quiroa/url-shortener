@@ -9,7 +9,7 @@ var generateTinyUrl = (req, res)=>{
         var url2save = new Url({
             url: req.body.longUrl,
             shortenKey:_tmpKey,
-            shortenUrl: ("http://localhost:3000/"+ _tmpKey),
+            shortenUrl: ("http://localhost:80/"+ _tmpKey),
             visits:0
         });
         _tmpKey=0;

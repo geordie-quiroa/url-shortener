@@ -9,7 +9,7 @@ app.use(bodyParser.json()); //midleware
 //var controller = require('../controllers/url.controller.js');
 //var router = express.Router();
 //app.use('/testRouter',  router.get('/testRouter', controller.test));
-var port = 3000;
+var port = 80;
 //app.use(express.static('./frontend/public/index.html'));
 app.use(function (req, res, next) {
   //res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:62856')

@@ -4,7 +4,7 @@ var createUrl2Api = function(){
         if (event.keyCode == 13 || event.which == 13){
             //alert("Llego aqui");
             event.preventDefault();
-            var inputUrl = document.getElementById("search").value, urlApi = "http://localhost:3000/api/createUrl", _tmpUrl = {},
+            var inputUrl = document.getElementById("search").value, urlApi = "http://localhost:80/api/createUrl", _tmpUrl = {},
             data2send = {
                 longUrl:inputUrl
             };
