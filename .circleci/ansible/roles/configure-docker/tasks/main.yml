@@ -34,3 +34,11 @@
     name: ["docker-ce", "docker-ce-cli", "containerd.io"]
     state: latest
     update_cache: yes
+- name: Fetch app docker image.
+  become: yes
+  shell: |
+    echo "{{ docker_password }}" | docker login --username {{ docker_user }} --password-stdin
+- name: Run app.
+  become: yes
+  shell: |
+    docker run -p 80:80 url-shortener:{{ circle_branch }}

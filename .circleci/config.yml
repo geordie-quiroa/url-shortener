@@ -115,6 +115,23 @@ jobs:
           root: ~/project
           paths:
             - .circleci/ansible/inventory.txt
+  deploy-app:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Login Dockerhub
+          command: |
+            echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USER --password-stdin
+      - run:
+          name: Build app image.
+          command: |
+            docker build -t gquiroa/url-shortener:$CIRCLE_BRANCH .
+      - run:
+          name: Push docker image.
+          command: |
+            docker push gquiroa/url-shortener:$CIRCLE_BRANCH
+          
   configure-infrastructure:
     docker:
       # Docker image here that supports Ansible
