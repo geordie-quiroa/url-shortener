@@ -194,7 +194,9 @@ workflows:
       - build-app
       - scan-backend:
           requires: [build-app]
-      - deploy-infrastructure:
+      - deploy-app:
           requires: [scan-backend]
+      - deploy-infrastructure:
+          requires: [deploy-app]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
