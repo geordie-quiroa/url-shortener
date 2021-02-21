@@ -14,7 +14,7 @@
 - name: Install docker dependencies
   become: yes
   apt:
-    name: ["tar", "gzip", "git", "apt-transport-https", "ca-certificates", "curl", "gnupg-agent", "software-properties-common"]
+    name: ["tar", "gzip", "git", "apt-transport-https", "ca-certificates", "curl", "gnupg-agent", "software-properties-common", "gnupg2"]
     state: latest
     update_cache: yes
 - name: Adding docker official GPG Key
