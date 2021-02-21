@@ -20,7 +20,7 @@ Desarrollo en node js que consume un restfulAPI para acortar URL´s realizando r
 
 ### Requerimientos para empezar
 Tener disponible en máquina:
-   - Node JS
+   - Node JS 12.4.1
    - NPM
 
 ## Start url-shortener en máquina local
