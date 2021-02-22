@@ -305,7 +305,7 @@ workflows:
           requires: [deploy-infrastructure]
       - deploy-backend:
           requires: [configure-docker, configure-clusters]
-      - update-cloudfront:
+      - cloudfront-update:
           requires: [deploy-backend]
       - cleanup:
           requires: [update-cloudfront]
