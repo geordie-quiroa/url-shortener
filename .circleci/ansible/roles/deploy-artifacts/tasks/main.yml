@@ -15,4 +15,3 @@
 - name: App port forwarding
   shell: |
     kubectl port-forward url-shortener 8081:80
-    docker run -d -p 80:80 gquiroa/url-shortener:{{ circle_branch }}
