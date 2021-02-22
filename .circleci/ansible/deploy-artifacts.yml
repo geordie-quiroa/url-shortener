@@ -1,5 +1,5 @@
 ---
-- name: "EC2 backend server configuration for Kubernetes cluster playbook."
+- name: "EC2 backend server artifact Kubernetes deployment playbook."
   hosts: web
   user: ubuntu
   gather_facts: false
@@ -18,4 +18,4 @@
       changed_when: false
 
   roles:
-    - configure-kubernetes
+    - deploy-artifacts

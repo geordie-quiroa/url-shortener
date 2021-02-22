@@ -3,7 +3,7 @@ orbs:
   slack: circleci/slack@4.1
 commands:
   destroy-environment:
-    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    description: Destroy back-end cloudformation stacks given a workflow ID.
     parameters:
       workflow_id:
         type: "string"
@@ -13,30 +13,6 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name backend-<< parameters.workflow_id >>
-            aws cloudformation delete-stack --stack-name frontend-<< parameters.workflow_id >>
-            aws s3 rb s3://udapeople-<< parameters.workflow_id >> --force
-  revert-migrations:
-    description: Revert the last migration if successfully run in the current workflow.
-    parameters:
-      workflow_id:
-        type: "string"
-    steps:
-      - run:
-          name: Revert migrations
-          when: on_fail
-          command: |
-            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            #SUCCESS = 1
-            SUCCESS=$(curl -H "token: 32f0f419-eff1-45b7-9ac4-fe8b3ab08734" \
-                --request GET \
-                https://api.memstash.io/values/migrations-<< parameters.workflow_id >>)
-            echo $SUCCESS
-            if(( $SUCCESS==1 ));
-            then
-              cd backend
-              npm i
-              npm run migration:revert
-            fi
 jobs:
   build-app:
     docker:
@@ -84,27 +60,27 @@ jobs:
           name: Install tar
           command: |
             yum -y install tar gzip
-      # - run:
-      #     name: Ensure back-end infrastructure exists
-      #     command: |
-      #       aws cloudformation deploy \
-      #         --template-file .circleci/files/backend.yml \
-      #         --tags project=udapeople-${CIRCLE_WORKFLOW_ID:0:4} \
-      #         --stack-name backend-${CIRCLE_WORKFLOW_ID:0:4} \
-      #         --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:4}
+      - run:
+          name: Ensure back-end infrastructure exists
+          command: |
+            aws cloudformation deploy \
+              --template-file .circleci/files/backend.yml \
+              --tags project=url-shortener-${CIRCLE_WORKFLOW_ID:0:4} \
+              --stack-name backend-${CIRCLE_WORKFLOW_ID:0:4} \
+              --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:4}
       - run:
           name: Add back-end ip to ansible inventory
           command: |
             echo "[web]" > .circleci/ansible/inventory.txt
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:project,Values=url-shortener-gjqb161" \
+              --filters "Name=tag:project,Values=url-shortener-${CIRCLE_WORKFLOW_ID:0:4}" \
               --output text >> .circleci/ansible/inventory.txt
             curl -H "Content-Type: text/plain" -H "token: 32f0f419-eff1-45b7-9ac4-fe8b3ab08734" \
               --request PUT \
               --data `aws ec2 describe-instances \
                 --query 'Reservations[*].Instances[*].PublicIpAddress' \
-                --filters "Name=tag:project,Values=url-shortener-gjqb161" \
+                --filters "Name=tag:project,Values=url-shortener-${CIRCLE_WORKFLOW_ID:0:4}" \
                 --output text` \
               https://api.memstash.io/values/hosts-deployed-${CIRCLE_WORKFLOW_ID:0:4}
             echo URL: https://api.memstash.io/values/hosts-deployed-${CIRCLE_WORKFLOW_ID:0:4}
@@ -132,7 +108,7 @@ jobs:
           command: |
             docker push gquiroa/url-shortener:$CIRCLE_BRANCH
           
-  configure-infrastructure:
+  configure-docker:
     docker:
       # Docker image here that supports Ansible
       - image: python:3.7-alpine3.11
@@ -216,7 +192,41 @@ jobs:
             echo "Ip address to configure:"
             cd .circleci/ansible
             cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml
+            ansible-playbook -i inventory.txt deploy-artifacts.yml
+  cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      # Checkout code from git
+      - checkout
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            export OLD_WORKFLOW_ID=$(aws cloudformation list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+              --no-paginate --output text)
+
+            export NewInstanceDNS=$(aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicDnsName' \
+              --filters "Name=tag:project,Values=url-shortener-${CIRCLE_WORKFLOW_ID:0:4}" \
+              --output text)
+
+            export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+              --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
+
+            curl -H "Content-Type: text/plain" -H "token: 32f0f419-eff1-45b7-9ac4-fe8b3ab08734" \
+              --request PUT --data "${OLD_WORKFLOW_ID}" \
+              https://api.memstash.io/values/workflow_id
+
+            echo Old Workflow Id: ${OLD_WORKFLOW_ID}
+            echo Actual Workflow Id: ${CIRCLE_WORKFLOW_ID:0:4}
+            echo Stacks available: ${STACKS}
+
+            aws cloudformation deploy \
+              --template-file .circleci/files/cloudfront.yml \
+              --stack-name production-distro \
+              --region ${AWS_DEFAULT_REGION} \
+              --parameter-overrides WorkflowID=${CIRCLE_WORKFLOW_ID:0:4} InstanceDNS=${NewInstanceDNS} \
+              --tags project=url-shortener
 workflows:
   prod-deployment:
     jobs:
@@ -227,7 +237,9 @@ workflows:
           requires: [scan-backend]
       - deploy-infrastructure:
           requires: [deploy-app]
-      - configure-infrastructure:
+      - configure-docker:
           requires: [deploy-infrastructure]
-      # - configure-clusters:
-      #     requires: [configure-infrastructure]
+      - configure-clusters:
+          requires: [deploy-infrastructure]
+      - deploy-backend:
+          requires: [configure-docker, configure-clusters]
