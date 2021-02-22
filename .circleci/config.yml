@@ -221,8 +221,8 @@ jobs:
             cd .circleci/ansible
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-artifacts.yml
-      # - destroy-environment:
-      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}
+      - destroy-environment:
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}
   
   cloudfront-update:
     docker:
@@ -294,6 +294,9 @@ workflows:
           requires: [scan-backend]
       - deploy-app:
           requires: [container-health-check]
+          filters:
+            branches:
+              only: [master]
       - deploy-infrastructure:
           requires: [deploy-app]
       - configure-docker:
