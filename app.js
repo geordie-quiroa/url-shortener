@@ -22,7 +22,7 @@ app.use(function (req, res, next) {
 });
 app.use(express.static(__dirname + '/views'));
 //Store all HTML files in view folder.
-app.use(cors())
+app.use(cors())x // Testing linting with this error.
 
 // variables base de datos -------------------------------------------------------------------------------------
 var mongoose = require('mongoose'), dev_db = require('./configs/mongoDB.config'),
