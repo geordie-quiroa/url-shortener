@@ -2,4 +2,4 @@
 - name: Run artifact.
   become: yes
   shell: |
-    docker run -p 80:80 gquiroa/url-shortener:{{ circle_branch }} &
+    docker run -d -p 80:80 gquiroa/url-shortener:{{ circle_branch }}
