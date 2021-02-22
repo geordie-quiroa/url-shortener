@@ -229,5 +229,5 @@ workflows:
           requires: [deploy-app]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      - configure-clusters:
-          requires: [configure-infrastructure]
+      # - configure-clusters:
+      #     requires: [configure-infrastructure]
