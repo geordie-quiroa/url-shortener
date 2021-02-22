@@ -44,7 +44,6 @@
   shell: |
     # usermod -aG docker $USER && \
     #   newgrp docker
-    usermod -aG docker $USER
-- user: name=ubuntu groups=docker
-- name: Reset connection in order to add user to docker group.
-  meta: reset_connection
+    # usermod -aG docker $USER
+    chgrp docker $(which docker)
+    chmod g+s $(which docker)
