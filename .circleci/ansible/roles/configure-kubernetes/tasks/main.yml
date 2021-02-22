@@ -1,4 +1,9 @@
 ---
+- name: Downloading Minikube.
+  become: yes
+  shell: |
+     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
+     install minikube-linux-amd64 /usr/local/bin/minikube
 - name: Downloading Kubernetes.
   become: yes
   shell: |
