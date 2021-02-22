@@ -115,15 +115,15 @@ jobs:
           name: Run docker container.
           command: |
             docker run -d -p 8080:80 gquiroa/url-shortener:$CIRCLE_BRANCH
-      - run:
-          name: Fetch app content.
-          command: |
-            if curl -s  "localhost:8080/index.html" | grep "Geordie"
-            then
-              return 0
-            else
-              return 1
-            fi
+      # - run:
+      #     name: Fetch app content.
+      #     command: |
+      #       if curl -s  "localhost:8080/index.html" | grep "Geordie"
+      #       then
+      #         return 0
+      #       else
+      #         return 1
+      #       fi
   deploy-app:
     machine: true
     steps:
