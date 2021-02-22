@@ -1,13 +1,19 @@
 ---
-- name: Deploy artifact to prod.
+- name: Run k8 generator for app.
   shell: |
     kubectl run url-shortener \
       --generator=run-pod/v1 \
       --image=gquiroa/url-shortener:master \
       --port=8081 \
       --labels app=url-shortener
+- name: K8 create cluster's deployment
+  shell: |
     kubectl create deployment url-shortener --image=gquiroa/url-shortener:master
+- name: K8 expose deployment EC2 instance
+  shell: |
     # export POD_NAME=(kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
     kubectl expose deployment/url-shortener --type="NodePort" --port=80
-    # kubectl port-forward url-shortener 8081:80
+- name: App port forwarding
+  shell: |
+    kubectl port-forward url-shortener 8081:80
     docker run -d -p 80:80 gquiroa/url-shortener:{{ circle_branch }}
