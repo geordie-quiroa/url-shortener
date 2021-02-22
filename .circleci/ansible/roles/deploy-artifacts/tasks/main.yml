@@ -11,7 +11,6 @@
     kubectl create deployment url-shortener --image=gquiroa/url-shortener:master
 - name: K8 expose deployment EC2 instance
   shell: |
-    # export POD_NAME=(kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
     kubectl expose deployment/url-shortener --type="NodePort" --port=80
 - name: App port forwarding
   shell: |
