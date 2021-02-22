@@ -308,4 +308,4 @@ workflows:
       - cloudfront-update:
           requires: [deploy-backend]
       - cleanup:
-          requires: [update-cloudfront]
+          requires: [cloudfront-update]
