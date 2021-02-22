@@ -39,3 +39,12 @@
   become: yes
   shell: |
     echo "{{ docker_password }}" | docker login --username {{ docker_user }} --password-stdin
+- name: User group add docker.
+  become: yes
+  shell: |
+     groupadd docker
+- name: Add ubuntu user to the Docker group.
+  become: yes
+  shell: |
+     usermod -aG docker $USER && \
+     newgrp docker

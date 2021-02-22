@@ -20,3 +20,6 @@
   become: yes
   shell: |
     apt-get install -y kubectl
+- name: Start MiniKube
+  shell: |
+    minikube start
