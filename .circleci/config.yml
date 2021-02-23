@@ -1,6 +1,8 @@
 version: 2.1
 orbs:
-  slack: circleci/slack@4.1
+  aws-eks: circleci/aws-eks@1.0.3
+  kubernetes: circleci/kubernetes@0.4.0
+
 commands:
   destroy-environment:
     description: Destroy back-end cloudformation stacks given a workflow ID.
@@ -91,7 +93,7 @@ jobs:
           root: ~/project
           paths:
             - .circleci/ansible/inventory.txt
-  
+
   container-health-check:
     machine: true
     steps:
@@ -129,7 +131,7 @@ jobs:
           name: Push docker image.
           command: |
             docker push gquiroa/url-shortener:$CIRCLE_BRANCH
-          
+
   configure-docker:
     docker:
       # Docker image here that supports Ansible
@@ -161,7 +163,7 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}
-  
+
   configure-clusters:
     docker:
       # Docker image here that supports Ansible
@@ -193,7 +195,7 @@ jobs:
             ansible-playbook -i inventory.txt configure-clusters.yml
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}
-  
+
   deploy-backend:
     docker:
       - image: python:3.7-alpine3.11
@@ -223,7 +225,7 @@ jobs:
             ansible-playbook -i inventory.txt deploy-artifacts.yml
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}
-  
+
   cloudfront-update:
     docker:
       - image: amazon/aws-cli
@@ -258,7 +260,7 @@ jobs:
               --region ${AWS_DEFAULT_REGION} \
               --parameter-overrides WorkflowID=${CIRCLE_WORKFLOW_ID:0:4} InstanceDNS=${NewInstanceDNS} \
               --tags project=url-shortener
-  
+
   cleanup:
     docker:
       - image: amazon/aws-cli
@@ -283,7 +285,23 @@ jobs:
             aws cloudformation delete-stack --stack-name backend-${OLD_WORKFLOW_ID}
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}
-            
+
+  test-cluster:
+    executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          Name of the EKS cluster
+        type: string
+    steps:
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+      - run:
+          command: |
+            kubectl get services
+          name: Test cluster
+
 workflows:
   prod-deployment:
     jobs:
@@ -297,15 +315,25 @@ workflows:
           filters:
             branches:
               only: [master]
-      - deploy-infrastructure:
-          requires: [deploy-app]
-      - configure-docker:
-          requires: [deploy-infrastructure]
-      - configure-clusters:
-          requires: [deploy-infrastructure]
-      - deploy-backend:
-          requires: [configure-docker, configure-clusters]
-      - cloudfront-update:
-          requires: [deploy-backend]
-      - cleanup:
-          requires: [cloudfront-update]
+      - aws-eks/create-cluster:
+          cluster-name: cluster-${CIRCLE_WORKFLOW_ID:0:4}
+      - test-cluster:
+          cluster-name: cluster-${CIRCLE_WORKFLOW_ID:0:4}
+          requires:
+            - aws-eks/create-cluster
+      - aws-eks/delete-cluster:
+          cluster-name: cluster-${CIRCLE_WORKFLOW_ID:0:4}
+          requires:
+            - test-cluster
+      # - deploy-infrastructure:
+      #     requires: [deploy-app]
+      # - configure-docker:
+      #     requires: [deploy-infrastructure]
+      # - configure-clusters:
+      #     requires: [deploy-infrastructure]
+      # - deploy-backend:
+      #     requires: [configure-docker, configure-clusters]
+      # - cloudfront-update:
+      #     requires: [deploy-backend]
+      # - cleanup:
+      #     requires: [cloudfront-update]
