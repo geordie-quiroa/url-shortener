@@ -298,9 +298,17 @@ jobs:
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: << parameters.cluster-name >>
       - run:
+          name: Test cluster
           command: |
             kubectl get services
-          name: Test cluster
+      - run:
+          name: Add docker credentials
+          command: |
+            kubectl create secret docker-registry docker-secret \
+              --docker-server="https://index.docker.io/v1/" \
+              --docker-username="$DOCKER_USER" \
+              --docker-password="$DOCKER_PASSWORD" \
+              --docker-email="gquiroa@ufm.edu"
 
 workflows:
   prod-deployment:
@@ -316,15 +324,17 @@ workflows:
             branches:
               only: [master]
       - aws-eks/create-cluster:
-          cluster-name: cluster-${CIRCLE_WORKFLOW_ID:0:4}
+          cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
+          # requires:
+          #   - deploy-app
       - test-cluster:
-          cluster-name: cluster-${CIRCLE_WORKFLOW_ID:0:4}
+          cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
           requires:
             - aws-eks/create-cluster
-      - aws-eks/delete-cluster:
-          cluster-name: cluster-${CIRCLE_WORKFLOW_ID:0:4}
-          requires:
-            - test-cluster
+      # - aws-eks/delete-cluster:
+      #     cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
+      #     requires:
+      #       - test-cluster
       # - deploy-infrastructure:
       #     requires: [deploy-app]
       # - configure-docker:
