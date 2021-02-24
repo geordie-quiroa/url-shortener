@@ -51,6 +51,7 @@ jobs:
       - save_cache:
           paths: [node_modules]
           key: build-app
+  
   deploy-infrastructure:
     docker:
       # Docker image here that supports AWS CLI
@@ -195,6 +196,62 @@ jobs:
             ansible-playbook -i inventory.txt configure-clusters.yml
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}
+  
+  deploy-cluster:
+    executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          Name of the EKS cluster
+        type: string
+    steps:
+      - kubernetes/install
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+      - run:
+          name: Add docker secret credentials to EKS cluster config
+          command: |
+            kubectl create secret docker-registry docker-secret \
+              --docker-server="https://index.docker.io/v1/" \
+              --docker-username="$DOCKER_USER" \
+              --docker-password="$DOCKER_PASSWORD" \
+              --docker-email="gquiroa@ufm.edu"
+      - run:
+          name: Get green LoadBalancer DNS.
+          command: |
+            echo $(aws elb describe-load-balancers --query LoadBalancerDescriptions[*].DNSName --output text)
+            echo $(aws elb describe-load-balancers --query LoadBalancerDescriptions[*].LoadBalancerName --output text) > green-LB-name.info
+            cat green-LB-name.info
+      - run:
+          name: Create application service account
+          command: |
+            kubectl apply -f aws/k8-app-service.yml && \
+              kubectl get sa url-shortener-sa
+      - run:
+          name: Deploy app into kubernetes cluster
+          command: |
+            kubectl apply -f aws/k8-app-deployment.yml
+      - run:
+          name: Update Load Balancer
+          command: |
+            aws elb delete-load-balancer --load-balancer-name $(cat green-LB-name.info)
+      - run:
+          name: Create LoadBalancer service.
+          command: |
+            kubectl expose deployment url-shortener-deployment --type=LoadBalancer --name=url-shortener-service
+      - run:
+          name: Get Blue version LoadBalancer DNS information.
+          command: |
+            kubectl get service/url-shortener-service
+            # aws eks update-kubeconfig --name url-shortener-ef8b
+      - run:
+          name: Check available services at cluster
+          command: |
+            kubectl get services
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - green-LB-name.info
 
   deploy-backend:
     docker:
@@ -242,6 +299,8 @@ jobs:
               --query 'Reservations[*].Instances[*].PublicDnsName' \
               --filters "Name=tag:project,Values=url-shortener-${CIRCLE_WORKFLOW_ID:0:4}" \
               --output text)
+            
+            export NewInstanceDNS=$(aws elb describe-load-balancers --query LoadBalancerDescriptions[*].DNSName --output text)
 
             export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
               --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
@@ -283,32 +342,10 @@ jobs:
 
             echo "Deleting stacks with Old Worflow ID: ${OLD_WORKFLOW_ID}"
             aws cloudformation delete-stack --stack-name backend-${OLD_WORKFLOW_ID}
-      - destroy-environment:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}
-
-  test-cluster:
-    executor: aws-eks/python3
-    parameters:
-      cluster-name:
-        description: |
-          Name of the EKS cluster
-        type: string
-    steps:
-      - kubernetes/install
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: << parameters.cluster-name >>
-      - run:
-          name: Test cluster
-          command: |
-            kubectl get services
-      - run:
-          name: Add docker credentials
-          command: |
-            kubectl create secret docker-registry docker-secret \
-              --docker-server="https://index.docker.io/v1/" \
-              --docker-username="$DOCKER_USER" \
-              --docker-password="$DOCKER_PASSWORD" \
-              --docker-email="gquiroa@ufm.edu"
+      - aws-eks/delete-cluster:
+          cluster-name: url-shortener-$OLD_WORKFLOW_ID
+      # - destroy-environment:
+      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}
 
 workflows:
   prod-deployment:
@@ -327,7 +364,7 @@ workflows:
           cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
           # requires:
           #   - deploy-app
-      - test-cluster:
+      - deploy-cluster:
           cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
           requires:
             - aws-eks/create-cluster

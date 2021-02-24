@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: url-shortener-sa
+  labels:
+    app: url-shortener
+imagePullSecrets:
+  - name: docker-secret
+# spec:
+#   type: LoadBalancer
+#   ports:
+#   - port: 80
+#   selector:
+#     app: url-shortener
