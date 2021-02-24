@@ -380,7 +380,7 @@ workflows:
       #     requires: [deploy-infrastructure]
       # - deploy-backend:
       #     requires: [configure-docker, configure-clusters]
-      # - cloudfront-update:
-      #     requires: [deploy-backend]
-      # - cleanup:
-      #     requires: [cloudfront-update]
+      - cloudfront-update:
+          requires: [deploy-cluster]
+      - cleanup:
+          requires: [cloudfront-update]
