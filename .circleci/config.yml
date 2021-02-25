@@ -343,6 +343,7 @@ jobs:
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
+      - aws-eks/install-eksctl
       - run:
           name: Remove old stacks and files
           command: |
@@ -360,7 +361,7 @@ jobs:
             echo "Deleting stacks with Old Worflow ID: ${OLD_WORKFLOW_ID}"
             aws cloudformation delete-stack --stack-name backend-${OLD_WORKFLOW_ID}
             eksctl delete cluster --name url-shortener-${OLD_WORKFLOW_ID}
-            
+
       - aws-eks/delete-cluster:
           cluster-name: url-shortener-${OLD_WORKFLOW_ID}
       # - destroy-environment:
