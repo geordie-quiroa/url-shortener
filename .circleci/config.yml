@@ -328,8 +328,9 @@ jobs:
               --tags project=url-shortener
 
   cleanup:
-    docker:
-      - image: amazon/aws-cli
+    # docker:
+    #   - image: amazon/aws-cli
+    executor: aws-eks/python3
     steps:
       # Checkout code from git
       - checkout
