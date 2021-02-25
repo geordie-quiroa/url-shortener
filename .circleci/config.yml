@@ -15,14 +15,19 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack --stack-name backend-<< parameters.workflow_id >>
+  
   destroy-clusters-stacks:
     description: Destroy K8s cloudformation clusters stacks given a workflow ID.
     parameters:
       workflow_id:
         type: "string"
     steps:
-      - aws-eks/delete-cluster:
-          cluster-name: url-shortener-<< parameters.workflow_id  >>
+      - run:
+          name: Delete clusters
+          when: on_fail
+          command:
+            aws-eks/delete-cluster:
+              cluster-name: url-shortener-<< parameters.workflow_id  >>
 jobs:
   build-app:
     docker:
