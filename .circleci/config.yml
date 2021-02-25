@@ -238,7 +238,7 @@ jobs:
       - run:
           name: Update Load Balancer
           command: |
-            LB = $(cat green-LB-name.txt)
+            export LB = $(cat green-LB-name.txt)
             if [ -n "${LB}" ]; then
               aws elb delete-load-balancer --load-balancer-name ${LB}
             fi
