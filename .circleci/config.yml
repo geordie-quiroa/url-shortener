@@ -222,9 +222,10 @@ jobs:
       - run:
           name: Get green LoadBalancer DNS if exists.
           command: |
-            echo $(aws elb describe-load-balancers --query LoadBalancerDescriptions[*].DNSName --output text)
-            echo $(aws elb describe-load-balancers --query LoadBalancerDescriptions[*].LoadBalancerName --output text) > green-LB-name.info
-            cat green-LB-name.info
+            aws elb describe-load-balancers --query LoadBalancerDescriptions[*].DNSName --output text
+            echo "$(aws elb describe-load-balancers --query LoadBalancerDescriptions[*].LoadBalancerName --output text)" > green-LB-name.txt
+            ls
+            cat green-LB-name.txt
       - run:
           name: Create application service account
           command: |
@@ -237,9 +238,9 @@ jobs:
       - run:
           name: Update Load Balancer
           command: |
-            if [$(cat green-LB-name.info) != ""]
-            then
-              aws elb delete-load-balancer --load-balancer-name $(cat green-LB-name.info)
+            LB = $(cat green-LB-name.txt)
+            if [ -n "${LB}" ]; then
+              aws elb delete-load-balancer --load-balancer-name ${LB}
             fi
       - run:
           name: Create LoadBalancer service.
@@ -257,7 +258,10 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths:
-            - green-LB-name.info
+            - green-LB-name.txt
+      - aws-eks/delete-cluster:
+          cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
+          when: on_fail
 
   deploy-backend:
     docker:
