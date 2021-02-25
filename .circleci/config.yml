@@ -220,7 +220,7 @@ jobs:
               --docker-password="$DOCKER_PASSWORD" \
               --docker-email="gquiroa@ufm.edu"
       - run:
-          name: Get green LoadBalancer DNS.
+          name: Get green LoadBalancer DNS if exists.
           command: |
             echo $(aws elb describe-load-balancers --query LoadBalancerDescriptions[*].DNSName --output text)
             echo $(aws elb describe-load-balancers --query LoadBalancerDescriptions[*].LoadBalancerName --output text) > green-LB-name.info
