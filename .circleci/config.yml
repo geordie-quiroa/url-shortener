@@ -362,7 +362,6 @@ jobs:
             aws cloudformation delete-stack --stack-name backend-${OLD_WORKFLOW_ID}
             eksctl delete cluster --name url-shortener-${OLD_WORKFLOW_ID}
 
-
 workflows:
   prod-deployment:
     jobs:
@@ -378,8 +377,8 @@ workflows:
               only: [master]
       - aws-eks/create-cluster:
           cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
-          # requires:
-          #   - deploy-app
+          requires:
+            - deploy-app
       - deploy-cluster:
           cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
           requires:
