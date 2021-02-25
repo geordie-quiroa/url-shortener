@@ -359,8 +359,10 @@ jobs:
 
             echo "Deleting stacks with Old Worflow ID: ${OLD_WORKFLOW_ID}"
             aws cloudformation delete-stack --stack-name backend-${OLD_WORKFLOW_ID}
+            eksctl delete cluster --name url-shortener-${OLD_WORKFLOW_ID}
+            
       - aws-eks/delete-cluster:
-          cluster-name: url-shortener-$OLD_WORKFLOW_ID
+          cluster-name: url-shortener-${OLD_WORKFLOW_ID}
       # - destroy-environment:
       #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:4}
 
