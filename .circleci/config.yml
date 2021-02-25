@@ -237,7 +237,10 @@ jobs:
       - run:
           name: Update Load Balancer
           command: |
-            aws elb delete-load-balancer --load-balancer-name $(cat green-LB-name.info)
+            if [$(cat green-LB-name.info) != ""]
+            then
+              aws elb delete-load-balancer --load-balancer-name $(cat green-LB-name.info)
+            fi
       - run:
           name: Create LoadBalancer service.
           command: |
