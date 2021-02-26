@@ -328,18 +328,10 @@ jobs:
               --tags project=url-shortener
 
   cleanup:
-    # docker:
-    #   - image: amazon/aws-cli
     executor: aws-eks/python3
-    # docker:
-    #   - image: python:3.7-alpine3.11
     steps:
       # Checkout code from git
       - checkout
-      # - run:
-      #     name: Install dependencies
-      #     command: |
-      #       yum -y install tar gzip curl
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
@@ -383,10 +375,6 @@ workflows:
           cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
           requires:
             - aws-eks/create-cluster
-      # - aws-eks/delete-cluster:
-      #     cluster-name: url-shortener-${CIRCLE_WORKFLOW_ID:0:4}
-      #     requires:
-      #       - test-cluster
       # - deploy-infrastructure:
       #     requires: [deploy-app]
       # - configure-docker:
